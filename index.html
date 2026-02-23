@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Biblioteca de scripts para Blox Fruits — Auto Farm, Auto Bounty e Kaitun Farm. Apenas para consulta." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="BF Scripts — Blox Fruits Script Library" />
+  <meta property="og:description" content="Organização e consulta de scripts para Blox Fruits. Sem hospedagem de arquivos." />
+  <meta property="og:type" content="website" />
+  <title>BF Scripts — Blox Fruits Script Library</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Favicon inline SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">⚔️&nbsp;<span>BF Scripts</span></div>
+      <div class="nav-links">
+        <a href="#" data-page="home"   onclick="navigate('home');   return false;">Início</a>
+        <a href="#" data-page="scripts" onclick="navigate('scripts'); return false;">Scripts</a>
+        <a href="#" data-page="aviso"  onclick="navigate('aviso');  return false;">Aviso Legal</a>
+        <a href="#" data-page="readme" onclick="navigate('readme'); return false;">README</a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#" data-page="home"    onclick="navigate('home');   return false;">🏠 Início</a>
+      <a href="#" data-page="scripts" onclick="navigate('scripts'); return false;">📜 Scripts</a>
+      <a href="#" data-page="aviso"   onclick="navigate('aviso');  return false;">⚠️ Aviso Legal</a>
+      <a href="#" data-page="readme"  onclick="navigate('readme'); return false;">📖 README</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       MODAL DE RISCO
+  ════════════════════════════════════════ -->
+  <div id="risk-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-icon">⚠️</div>
+      <h3 id="modal-title">AVISO DE RISCO</h3>
+      <p>
+        O uso de scripts em Roblox pode resultar em <strong>punições, suspensões ou banimento permanente</strong>
+        da sua conta. Este site apenas organiza informações e <strong>não incentiva, instiga ou apoia</strong>
+        o uso de qualquer script. O uso é de <strong>total responsabilidade do usuário</strong>.
+        Ao continuar, você declara estar ciente dos riscos.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="acceptRisk()">✅  Aceitar e Continuar</button>
+        <button class="btn btn-danger"  onclick="declineRisk()">✖  Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       APP
+  ════════════════════════════════════════ -->
+  <main id="app">
+
+    <!-- ─── HOME ─────────────────────────── -->
+    <section id="page-home" class="page">
+      <div class="hero">
+        <div class="hero-badge">BLOX FRUITS · SCRIPT LIBRARY</div>
+        <h1>Sua biblioteca de<br /><span class="accent">Scripts BF</span></h1>
+        <p>Organização, consulta e cópia de scripts para Blox Fruits.<br />Sem hospedagem. Sem incentivo. Só informação.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="navigate('scripts')">⚔️  Ver Scripts</button>
+          <button class="btn btn-outline" onclick="navigate('readme')">📖  Como Funciona</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-number js-total-scripts">50</div>
+          <div class="stat-label">Scripts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number js-total-cats">3</div>
+          <div class="stat-label">Categorias</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Gratuito</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Categorias</h2>
+      <div class="categories-grid" id="home-categories">
+        <!-- renderizado por JS -->
+      </div>
+    </section>
+
+    <!-- ─── SCRIPTS (lista de categorias) ── -->
+    <section id="page-scripts" class="page">
+      <div class="page-header">
+        <h2>📜 Scripts</h2>
+        <p>Escolha uma categoria para ver todos os scripts disponíveis.</p>
+      </div>
+      <div class="categories-grid" id="scripts-categories">
+        <!-- renderizado por JS -->
+      </div>
+    </section>
+
+    <!-- ─── CATEGORY (lista de scripts) ─── -->
+    <section id="page-category" class="page">
+      <div class="back-btn" onclick="navigate('scripts')">← Voltar para Scripts</div>
+      <div class="page-header">
+        <h2>
+          <span id="cat-icon"></span>&nbsp;<span id="cat-name"></span>
+        </h2>
+        <p id="cat-desc"></p>
+        <div class="script-meta" style="margin-top:10px;">
+          <span class="tag tag-cat js-cat-count" id="cat-count"></span>
+        </div>
+      </div>
+      <div class="scripts-list" id="cat-scripts-list">
+        <!-- renderizado por JS -->
+      </div>
+    </section>
+
+    <!-- ─── SCRIPT DETAIL ─────────────────── -->
+    <section id="page-script-detail" class="page">
+      <div class="back-btn" onclick="navigate('category')">← Voltar para a Categoria</div>
+      <div class="script-detail-header">
+        <h2 id="script-name"></h2>
+        <div class="script-meta">
+          <span class="tag tag-cat" id="script-cat"></span>
+          <span class="tag tag-info">Blox Fruits</span>
+          <span class="tag tag-info">Lua</span>
+        </div>
+      </div>
+
+      <div class="script-explanation" id="script-explain"></div>
+
+      <!-- Aviso inline -->
+      <div class="info-box" style="border-left-color: var(--danger); margin-bottom: 18px;">
+        <strong style="color:var(--danger);">⚠️ Lembrete de Risco:</strong>
+        <span style="color:var(--text-secondary); margin-left:6px;">
+          O uso deste script pode resultar em banimento. Use por sua própria conta e risco.
+        </span>
+      </div>
+
+      <div class="code-block-wrap">
+        <div class="code-header">
+          <span class="code-lang">Lua / Roblox Script</span>
+          <span style="font-size:0.78rem; color:var(--text-muted);">Apenas consulta — não executar aqui</span>
+        </div>
+        <pre class="code-block" id="script-code"></pre>
+      </div>
+
+      <button class="btn btn-copy" id="copy-btn" onclick="copyScript()">
+        📋&nbsp; COPIAR SCRIPT
+      </button>
+    </section>
+
+    <!-- ─── AVISO LEGAL ────────────────────── -->
+    <section id="page-aviso" class="page">
+      <div class="prose-page">
+        <h2>⚠️ Aviso Legal</h2>
+
+        <div class="info-box">
+          <strong>Este site não incentiva, instiga ou apoia o uso de scripts ou cheats em nenhum jogo.</strong>
+          As informações aqui presentes são disponibilizadas apenas para fins educacionais e informativos.
+        </div>
+
+        <h3>Isenção de Responsabilidade</h3>
+        <p>
+          O site <strong>BF Scripts</strong> não se responsabiliza por quaisquer danos, perdas, punições,
+          banimentos ou outros prejuízos decorrentes do uso das informações aqui disponibilizadas.
+          O usuário assume integralmente todos os riscos associados ao uso de qualquer script.
+        </p>
+
+        <h3>Violação dos Termos de Serviço</h3>
+        <p>
+          O uso de scripts, bots, executores ou qualquer tipo de software de terceiros para modificar
+          a experiência de jogo em Roblox é uma <strong>violação direta dos Termos de Serviço da Roblox Corporation</strong>.
+          Isso pode resultar em suspensão temporária ou banimento permanente da conta.
+        </p>
+
+        <h3>Direitos de Propriedade</h3>
+        <p>
+          Todos os scripts listados neste site são de autoria de seus respectivos criadores.
+          Este site não reivindica propriedade sobre nenhum dos códigos apresentados.
+          Os links e referências apontam para fontes externas e independentes.
+        </p>
+
+        <h3>Conteúdo de Terceiros</h3>
+        <p>
+          Este site pode conter referências ou links para conteúdo externo. Não temos controle
+          sobre o conteúdo de sites externos e não nos responsabilizamos por sua disponibilidade,
+          precisão ou segurança.
+        </p>
+
+        <h3>Público-Alvo</h3>
+        <p>
+          Este site é destinado exclusivamente a maiores de 18 anos. Se você é menor de idade,
+          solicitamos que saia desta página imediatamente.
+        </p>
+
+        <h3>Atualizações</h3>
+        <p>
+          Este aviso pode ser atualizado a qualquer momento sem aviso prévio. É responsabilidade
+          do usuário verificar periodicamente este documento.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── README ─────────────────────────── -->
+    <section id="page-readme" class="page">
+      <div class="prose-page">
+        <h2>📖 README — Como Funciona</h2>
+
+        <div class="info-box">
+          <strong>BF Scripts</strong> é uma biblioteca de consulta de scripts para Blox Fruits.
+          O site não hospeda arquivos, não executa scripts e não incentiva seu uso.
+        </div>
+
+        <h3>Objetivo do Site</h3>
+        <p>
+          O objetivo do BF Scripts é centralizar e organizar informações sobre scripts disponíveis
+          para o jogo Blox Fruits no Roblox. O site funciona como uma biblioteca de consulta,
+          permitindo que usuários encontrem, visualizem e copiem códigos de forma organizada.
+        </p>
+
+        <h3>Como Navegar</h3>
+        <p>
+          A navegação é feita em etapas simples:
+        </p>
+        <ul>
+          <li><strong>Início</strong> → Visão geral com as categorias disponíveis</li>
+          <li><strong>Scripts</strong> → Lista de todas as categorias</li>
+          <li><strong>Categoria</strong> → Lista de scripts da categoria selecionada</li>
+          <li><strong>Script Individual</strong> → Detalhes, explicação e código do script</li>
+        </ul>
+        <p>
+          Para visualizar o código de um script, é necessário aceitar o aviso de risco. Esse aceite
+          é salvo na sessão atual e não será solicitado novamente enquanto a aba estiver aberta.
+        </p>
+
+        <h3>Categorias Disponíveis</h3>
+        <p>
+          Os scripts estão organizados em três categorias principais:
+        </p>
+        <ul>
+          <li><strong>Auto Farm</strong> — Scripts para farm automático de XP, mobs e itens</li>
+          <li><strong>Auto Bounty</strong> — Scripts para acumulação automática de bounty/reputação</li>
+          <li><strong>Auto Farm Kaitun</strong> — Scripts especializados para a região do Kaitun no Third Sea</li>
+        </ul>
+
+        <h3>Sobre os Scripts</h3>
+        <p>
+          Todos os scripts listados são de autoria de terceiros e estão disponíveis em repositórios
+          públicos na internet. Este site não modifica, hospeda nem distribui os arquivos originais.
+          Os códigos exibidos são apenas para consulta e referência.
+        </p>
+
+        <h3>Links Externos</h3>
+        <p>
+          Os scripts fazem referência a fontes externas como GitHub e Pastebin. O BF Scripts
+          não tem controle sobre esses serviços externos e não garante a disponibilidade,
+          segurança ou integridade dos conteúdos hospedados neles.
+        </p>
+
+        <h3>Aviso Legal</h3>
+        <p>
+          O uso de scripts em Roblox viola os Termos de Serviço da Roblox Corporation e pode
+          resultar em punições ou banimento de conta. O uso é de total responsabilidade do usuário.
+          Este site não incentiva, apoia ou promove o uso de qualquer script.
+        </p>
+
+        <h3>Sem Hospedagem de Arquivos</h3>
+        <p>
+          O BF Scripts é um site estático hospedado no GitHub Pages. Não hospedamos, executamos
+          ou distribuímos nenhum arquivo de script. Todo o conteúdo é informativo e os códigos
+          exibidos são carregados diretamente do JavaScript do site para fins de consulta.
+        </p>
+
+        <h3>Contato e Contribuição</h3>
+        <p>
+          Para sugestões, correções ou para reportar scripts desatualizados, acesse o repositório
+          do projeto no GitHub. Contribuições são bem-vindas via Pull Request.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer>
+    <p>
+      <span>BF Scripts</span> &mdash; Apenas para consulta informativa.
+      Nenhum script é hospedado ou executado por este site.
+    </p>
+    <p style="margin-top:8px;">
+      Não somos afiliados à Roblox Corporation. Blox Fruits é propriedade de seus respectivos criadores.
+    </p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+        </html>
